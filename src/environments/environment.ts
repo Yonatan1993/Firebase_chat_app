@@ -4,15 +4,14 @@
 
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: 'AIzaSyAms2sKXrLvo_xVilVdZn31EjFWZS5E2QE',
-    authDomain: 'habits-76131.firebaseapp.com',
-    databaseURL: 'https://habits-76131.firebaseio.com',
-    projectId: 'habits-76131',
-    storageBucket: 'habits-76131.appspot.com',
-    messagingSenderId: '1064921247045',
-    appId: '1:1064921247045:web:f8a8c765a79c84c049a22c',
-    measurementId: 'G-V5YJKWQXNV',
+  firebase:{
+    apiKey: "AIzaSyAkpWT-LyqNr6rWDXC73H5O0vCfDY0RLr8",
+    authDomain: "chatapp-1c9c4.firebaseapp.com",
+    projectId: "chatapp-1c9c4",
+    storageBucket: "chatapp-1c9c4.appspot.com",
+    messagingSenderId: "204311320825",
+    appId: "1:204311320825:web:baa6ab4e46a25ed3102a28",
+    measurementId: "G-P1SMLZ0DTJ"
   },
 };
 

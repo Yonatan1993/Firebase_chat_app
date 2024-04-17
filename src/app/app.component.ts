@@ -13,7 +13,8 @@ export class AppComponent {
 
   ngOnInit() {}
 
-  public onGoogleSignin() {
-    this.authService.GoogleAuth();
+  public  sighnInWithGoogle(){
+    debugger;
+    this.authService.sighnInWithGoogle();
   }
 }
