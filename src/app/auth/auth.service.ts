@@ -42,7 +42,9 @@ public sighnInWithGoogle(){
 
   private authLogin(provider : firebase.default.auth.AuthProvider){
       return this.afAuth.signInWithPopup(provider).then(res =>{
+        this.isLoggin$.next(true);
         this.setUserData(<User>res.user);
+        this.router.navigate(['chat']);
       })
   }
 
