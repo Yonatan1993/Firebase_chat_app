@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AuthService} from "../auth/auth.service";
+import {AuthService} from "./auth.service";
 import {CanActivate, Router} from "@angular/router";
 import {tap} from "rxjs/operators";
 

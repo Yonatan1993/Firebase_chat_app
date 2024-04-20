@@ -77,4 +77,8 @@ public sighnInWithGoogle(){
   public isLoggedIn(): Observable<boolean>{
     return this.isLoggin$.asObservable();
   }
+
+  public getUserData():Observable<User>{
+    return this.userDetails$.asObservable();
+  }
 }

@@ -4,9 +4,9 @@
   </div>
 
   <div class="chat-container__chat" *ngIf="this.messages$ | async as messages">
-    <app-chat [meessages]="messages" ] ></app-chat>
+    <app-chat [meessages]="messages"  ></app-chat>
   </div>
   <div class="chat-container__add-room">
-    <button type="button" mat-raised-button color="primary">Add Room</button>
+    <button type="button" mat-raised-button color="primary" (click)="onOpenRoomModal()">Add Room</button>
   </div>
 </div>

@@ -4,6 +4,9 @@ import {Observable, Subscription} from "rxjs";
 import {IChatRoom, IMessage} from "../../models";
 import {ActivatedRoute, NavigationEnd, Router, RouterEvent} from "@angular/router";
 import {filter} from "rxjs/operators";
+import {MatDialog} from "@angular/material/dialog";
+import {AddRoomComponent} from "../add-room/add-room.component";
+import {AuthService} from "../../services/auth.service";
 
 
 
@@ -14,10 +17,16 @@ import {filter} from "rxjs/operators";
 })
 export class ChatContainerComponent implements OnInit,OnDestroy {
 
+
+  private userId: string = "";
   private subscription : Subscription = new Subscription()
   public rooms$ : Observable<Array<IChatRoom>>;
   public messages$ : Observable<Array<IMessage>>
-  constructor(private chatService : ChatService, private router : Router, private activatedRoute : ActivatedRoute) {
+  constructor(private chatService : ChatService,
+              private auth : AuthService,
+              private router : Router,
+              private activatedRoute : ActivatedRoute,
+              public dialog: MatDialog) {
     this.rooms$ = this.chatService.getRooms();
     const roomId : string = activatedRoute.snapshot.url[1].path;
     this.messages$ = this.chatService.getRoomMessages(roomId);
@@ -37,6 +46,31 @@ export class ChatContainerComponent implements OnInit,OnDestroy {
     }
 
   ngOnInit(): void {
+    this.subscription.add(
+      this.auth
+        .getUserData()
+        .pipe(filter(data => !!data))
+      .subscribe(user => {
+        this.userId = user.uid;
+      })
+    );
   }
+
+  onOpenRoomModal(): void {
+    const dialogRef = this.dialog.open(AddRoomComponent, {
+    width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.onAddRoom(result,this.userId)
+
+    });
+  }
+
+  public onAddRoom(roomName : string, userId: string){
+    this.chatService.addRoom(roomName, userId);
+  }
+
 
 }
