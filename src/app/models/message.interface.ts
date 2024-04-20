@@ -1,5 +1,5 @@
 
-export interface IMassage{
+export interface IMessage {
   id: string;
   userId : string;
   timestamp : number;
