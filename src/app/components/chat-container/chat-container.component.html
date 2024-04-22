@@ -4,7 +4,7 @@
   </div>
 
   <div class="chat-container__chat" *ngIf="this.messages$ | async as messages">
-    <app-chat [meessages]="messages"  ></app-chat>
+    <app-chat [messages]="messages" (onSendMessage)="OnSendMessage($event) "></app-chat>
   </div>
   <div class="chat-container__add-room">
     <button type="button" mat-raised-button color="primary" (click)="onOpenRoomModal()">Add Room</button>

@@ -19,17 +19,23 @@ export class ChatContainerComponent implements OnInit,OnDestroy {
 
 
   private userId: string = "";
+  private roomId?: string ;
   private subscription : Subscription = new Subscription()
   public rooms$ : Observable<Array<IChatRoom>>;
-  public messages$ : Observable<Array<IMessage>>
+  public messages$? : Observable<Array<IMessage>>
   constructor(private chatService : ChatService,
               private auth : AuthService,
               private router : Router,
               private activatedRoute : ActivatedRoute,
               public dialog: MatDialog) {
     this.rooms$ = this.chatService.getRooms();
-    const roomId : string = activatedRoute.snapshot.url[1].path;
-    this.messages$ = this.chatService.getRoomMessages(roomId);
+
+    if(activatedRoute.snapshot.url.length > 1){
+
+       this.roomId  = activatedRoute.snapshot.url[1].path;
+      this.messages$ = this.chatService.getRoomMessages(this.roomId);
+    }
+
 
     this.subscription.add(router.events.pipe(filter(data=> data instanceof NavigationEnd))
       .subscribe(data =>{
@@ -70,6 +76,12 @@ export class ChatContainerComponent implements OnInit,OnDestroy {
 
   public onAddRoom(roomName : string, userId: string){
     this.chatService.addRoom(roomName, userId);
+  }
+
+  public OnSendMessage(message:string):void{
+    if(this.userId && this.roomId){
+      this.chatService.sendMessage(this.userId, message, this.roomId);
+    }
   }
 
 
