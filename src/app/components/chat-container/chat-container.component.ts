@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ChatService} from "../../services/chat.service";
 import {Observable, Subscription} from "rxjs";
 import {IChatRoom, IMessage} from "../../models";
-import {ActivatedRoute, NavigationEnd, Router, RouterEvent} from "@angular/router";
+import {ActivatedRoute, ActivationEnd, NavigationEnd, Router, RouterEvent} from "@angular/router";
 import {filter} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {AddRoomComponent} from "../add-room/add-room.component";
@@ -31,7 +31,6 @@ export class ChatContainerComponent implements OnInit,OnDestroy {
     this.rooms$ = this.chatService.getRooms();
 
     if(activatedRoute.snapshot.url.length > 1){
-
        this.roomId  = activatedRoute.snapshot.url[1].path;
       this.messages$ = this.chatService.getRoomMessages(this.roomId);
     }
@@ -44,7 +43,8 @@ export class ChatContainerComponent implements OnInit,OnDestroy {
         if(urlArr.length > 2){
           this.messages$ = this.chatService.getRoomMessages(urlArr[2]);
         }
-    }))
+    })
+    );
   }
 
   ngOnDestroy(): void {
@@ -60,6 +60,16 @@ export class ChatContainerComponent implements OnInit,OnDestroy {
         this.userId = user.uid;
       })
     );
+
+    this.subscription.add(
+      this.router.events.pipe(filter(routerEvent => routerEvent instanceof ActivationEnd)).subscribe(
+        data =>{
+          const routerEvent = data as ActivationEnd;
+          this.roomId = routerEvent.snapshot.paramMap.get("roomId") || '';
+          console.log(this.roomId);
+        }
+      )
+    )
   }
 
   onOpenRoomModal(): void {

@@ -7,6 +7,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const modules: Array<any> = [
   MatToolbarModule,
@@ -15,7 +16,8 @@ const modules: Array<any> = [
   MatListModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatInputModule];
+  MatInputModule,
+  ScrollingModule];
 
 @NgModule({
   declarations: [],
