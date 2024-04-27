@@ -16,6 +16,7 @@ export class AuthService {
 
   private isLoggin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private userDetails$: Subject<User> = new Subject<User>();
+  private userId: string = "";
 constructor(private afs : AngularFirestore, private afAuth : AngularFireAuth, private router:Router) {
 
   const saveUserString = localStorage.getItem('user');
@@ -29,6 +30,8 @@ constructor(private afs : AngularFirestore, private afAuth : AngularFireAuth, pr
       const userString: string = JSON.stringify(user);
       localStorage.setItem('user', userString);
       this.isLoggin$.next(true);
+      this.userId = user.uid;
+      debugger;
     }else{
       localStorage.removeItem('user');
       this.isLoggin$.next(false);
@@ -80,5 +83,9 @@ public sighnInWithGoogle(){
 
   public getUserData():Observable<User>{
     return this.userDetails$.asObservable();
+  }
+
+  public getUserId(): string{
+    return this.userId;
   }
 }
